@@ -1,5 +1,8 @@
 import User from "../models/user.model.js";
 import bcrypt from "bcryptjs";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 export const signup = async (res, req) => {
   try {
@@ -29,5 +32,21 @@ export const signup = async (res, req) => {
       username,
     });
     user.save();
-  } catch (error) {}
+
+    const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
+      expiresIn: "3d",
+    });
+
+    res.cookie("jwt-linkedin", token, {
+      httpOnly: true, // prevent XSS attack
+      maxAge: 3 * 24 * 60 * 60 * 1000,
+      sameSite: "strict", // prevent CSRF attack
+      secure: process.env.NODE_ENV === "production", // prevent man-in-the-middle attack
+    });
+
+    res.status(201).json({ message: "User registered successfully" });
+  } catch (error) {
+    console.log("Error in signup", error.message);
+    res.status(500).json({ message: "Internal server error" });
+  }
 };
