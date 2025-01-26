@@ -4,7 +4,7 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-export const signup = async (res, req) => {
+export const signup = async (req, res) => {
   try {
     const { name, username, email, password } = req.body;
     const existingEmail = await User.findOne({ email });
