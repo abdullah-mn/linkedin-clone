@@ -7,6 +7,10 @@ dotenv.config();
 export const signup = async (req, res) => {
   try {
     const { name, username, email, password } = req.body;
+    if (!name || !username || !email || !password) {
+      res.status(400).json({ message: "Please fill all fields" });
+    }
+
     const existingEmail = await User.findOne({ email });
     if (existingEmail) {
       return res.status(400).json({ message: "Email already exists" });
