@@ -55,3 +55,8 @@ export const signup = async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 };
+
+export const logout = async (req, res) => {
+  res.clearCookie("jwt-linkedin");
+  res.json({ message: "Logged out successfully" });
+};
