@@ -9,7 +9,7 @@ export const signup = async (req, res) => {
   try {
     const { name, username, email, password } = req.body;
     if (!name || !username || !email || !password) {
-      res.status(400).json({ message: "Please fill all fields" });
+      return res.status(400).json({ message: "Please fill all fields" });
     }
 
     const existingEmail = await User.findOne({ email });
@@ -52,7 +52,7 @@ export const signup = async (req, res) => {
     res.status(201).json({ message: "User registered successfully" });
   } catch (error) {
     console.log("Error in signup", error.message);
-    res.status(500).json({ message: "Internal server error" });
+    return res.status(500).json({ message: "Internal server error" });
   }
 };
 
