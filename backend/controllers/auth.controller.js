@@ -73,8 +73,17 @@ export const login = async (req, res) => {
       return res.status(400).json({ message: "Invalid credentials" });
     }
 
-    res.status(200).json({message: "Logged in successfully"})
-    
+    const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
+      expiresIn: "3d",
+    });
+    res.cookie("jwt-linkedin", token, {
+      httpOnly: true,
+      maxAge: 3 * 24 * 60 * 60 * 1000,
+      sameSite: "strict",
+      secure: process.env.NODE_ENV === "production",
+    });
+
+    res.status(200).json({ message: "Logged in successfully" });
   } catch (error) {
     console.log("Error in login ", error.message);
     return res.status(500).json({ message: "Internal server error" });
