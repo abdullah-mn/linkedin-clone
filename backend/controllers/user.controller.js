@@ -19,3 +19,18 @@ export const getSuggestedConnections = async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 };
+
+export const getPublicProfile = async (req, res) => {
+  try {
+    const user = await User.findOne({ username: req.params.username }).select(
+      "-password"
+    );
+    if (!user) {
+      return res.status(400).json({ message: "User not found" });
+    }
+    res.json(user);
+  } catch (error) {
+    console.log("Error in getPublicProfile controller: ", error.message);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
