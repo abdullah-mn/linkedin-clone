@@ -1,5 +1,6 @@
 import cloudinary from "../lib/cloudinary.js";
 import Post from "../models/post.model.js";
+import Notification from "../models/notification.model.js";
 
 export const getFeedPosts = async (req, res) => {
   try {
@@ -100,6 +101,18 @@ export const createComment = async (req, res) => {
       },
       { new: true }
     );
+
+    // create a notification if the comment owner is not the post owner
+    if (post.author.toString() !== req.user._id.toString()) {
+      const newNotification = new Notification({
+        recipient: post.author,
+        type: "comment",
+        relatedUser: req.user._id,
+        relatedPost: postId,
+      });
+
+      await newNotification.save();
+    }
 
     res.status(200).json(post);
   } catch (error) {
