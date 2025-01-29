@@ -87,3 +87,23 @@ export const getPostById = async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 };
+
+export const createComment = async (req, res) => {
+  try {
+    const postId = req.params.id;
+    const { content } = req.body;
+
+    const post = await Post.findByIdAndUpdate(
+      postId,
+      {
+        $push: { comments: { user: req.user._id, content } },
+      },
+      { new: true }
+    );
+
+    res.status(200).json(post);
+  } catch (error) {
+    console.log("Error in createComment controller: ", error.message);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
