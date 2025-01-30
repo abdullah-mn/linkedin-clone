@@ -120,3 +120,37 @@ export const createComment = async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 };
+
+export const likePost = async (req, res) => {
+  try {
+    const postId = req.params.id;
+    const userId = req.user._id;
+    const post = await Post.findById(postId);
+
+    if (post.likes.includes(userId)) {
+      // unlike the post
+      post.likes = post.likes.filter(
+        (id) => id.toString() !== userId.toString()
+      );
+    } else {
+      // like the post
+      post.likes.push(userId);
+    }
+
+    // create a notification if the author of the post is not the one who likes the post
+    if (post.author.toString() !== userId.toString()) {
+      const newNotification = new Notification({
+        recipient: post.author,
+        type: "like",
+        relatedPost: postId,
+        relatedUser: userId,
+      });
+      await newNotification.save();
+    }
+
+    res.status(200).json(post);
+  } catch (error) {
+    console.log("Error in likePost controller: ", error.message);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
