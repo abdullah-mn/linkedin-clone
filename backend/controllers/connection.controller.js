@@ -131,3 +131,17 @@ export const getConnectionRequests = async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 };
+
+export const getUserConnections = async (req, res) => {
+  try {
+    const user = await User.findById(req.user._id).populate(
+      "connections",
+      "name username profilePicture headline connections"
+    );
+
+    res.status(200).json(user.connections);
+  } catch (error) {
+    console.log("Error in getUserConnections controller: ", error.message);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
