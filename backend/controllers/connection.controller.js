@@ -117,3 +117,17 @@ export const rejectConnectionRequest = async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 };
+
+export const getConnectionRequests = async (req, res) => {
+  try {
+    const requests = await ConnectionRequest.find({
+      recipient: req.user._id,
+      status: "pending",
+    }).populate("sender", "name username profilePicture headline connections");
+
+    res.status(200).json(requests);
+  } catch (error) {
+    console.log("Error in getConnectionRequests controller: ", error.message);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
