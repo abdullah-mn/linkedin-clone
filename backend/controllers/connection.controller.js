@@ -34,7 +34,7 @@ export const sendConnectionRequest = async (req, res) => {
 
     res.status(200).json(newRequest);
   } catch (error) {
-    console.log("Error in getAll controller: ", error.message);
+    console.log("Error in sendConnectionRequest controller: ", error.message);
     res.status(500).json({ message: "Internal server error" });
   }
 };
