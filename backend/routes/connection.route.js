@@ -5,6 +5,7 @@ import {
   getConnectionRequests,
   getUserConnections,
   rejectConnectionRequest,
+  removeConnection,
   sendConnectionRequest,
 } from "../controllers/connection.controller.js";
 
@@ -16,5 +17,6 @@ router.put("/reject/:requestId", protectRoute, rejectConnectionRequest);
 
 router.get("/requests", protectRoute, getConnectionRequests);
 router.get("/", protectRoute, getUserConnections);
+router.get("/:userId", protectRoute, removeConnection);
 
 export default router;
