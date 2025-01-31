@@ -164,3 +164,37 @@ export const removeConnection = async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 };
+
+export const getConnectionStatus = async (req, res) => {
+  try {
+    const targetUserId = req.params.userId;
+    const currentUserId = req.user._id;
+
+    const currentUser = req.user;
+    if (currentUser.connections.includes(targetUserId)) {
+      return res.json({ status: "connected" });
+    }
+
+    const pendingRequest = await ConnectionRequest.findOne({
+      $or: [
+        { sender: currentUserId, recipient: targetUserId },
+        { sender: targetUserId, recipient: currentUserId },
+      ],
+      status: "pending",
+    });
+
+    if (pendingRequest) {
+      if (pendingRequest.sender.toString() === currentUserId.toString()) {
+        return res.json({ status: "pending" });
+      } else {
+        return res.json({ status: "received", requestId: pendingRequest._id });
+      }
+    }
+
+    // if no connection or pending request found
+    res.json({ status: "not_connected" });
+  } catch (error) {
+    console.log("Error in getConnectionStatus controller: ", error.message);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
