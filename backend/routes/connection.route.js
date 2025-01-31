@@ -3,6 +3,7 @@ import { protectRoute } from "../middleware/auth.middleware.js";
 import {
   acceptConnectionRequest,
   getConnectionRequests,
+  getConnectionStatus,
   getUserConnections,
   rejectConnectionRequest,
   removeConnection,
@@ -18,5 +19,6 @@ router.put("/reject/:requestId", protectRoute, rejectConnectionRequest);
 router.get("/requests", protectRoute, getConnectionRequests);
 router.get("/", protectRoute, getUserConnections);
 router.get("/:userId", protectRoute, removeConnection);
+router.get("/status/:userId", protectRoute, getConnectionStatus);
 
 export default router;
