@@ -3,6 +3,7 @@ import { protectRoute } from "../middleware/auth.middleware.js";
 import {
   acceptConnectionRequest,
   getConnectionRequests,
+  getUserConnections,
   rejectConnectionRequest,
   sendConnectionRequest,
 } from "../controllers/connection.controller.js";
@@ -14,5 +15,6 @@ router.put("/accept/:requestId", protectRoute, acceptConnectionRequest);
 router.put("/reject/:requestId", protectRoute, rejectConnectionRequest);
 
 router.get("/requests", protectRoute, getConnectionRequests);
+router.get("/", protectRoute, getUserConnections);
 
 export default router;
