@@ -145,3 +145,22 @@ export const getUserConnections = async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 };
+
+export const removeConnection = async (req, res) => {
+  try {
+    const currentUserId = req.user._id;
+    const connectionId = req.params.userId;
+
+    await User.findByIdAndUpdate(currentUserId, {
+      $pull: { connections: connectionId },
+    });
+    await User.findByIdAndUpdate(connectionId, {
+      $pull: { connections: currentUserId },
+    });
+
+    res.status(200).json({ message: "Connection removed successfully" });
+  } catch (error) {
+    console.log("Error in removeConnection controller: ", error.message);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
