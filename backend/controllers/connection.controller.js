@@ -4,7 +4,7 @@ import Notification from "../models/notification.model.js";
 
 export const sendConnectionRequest = async (req, res) => {
   try {
-    const userId = req.params.id;
+    const userId = req.params.userId;
     const senderId = req.user._id;
 
     if (senderId.toString() === userId.toString()) {
@@ -43,7 +43,7 @@ export const sendConnectionRequest = async (req, res) => {
 
 export const acceptConnectionRequest = async (req, res) => {
   try {
-    const requestId = req.params.id;
+    const requestId = req.params.requestId;
     const userId = req.user._id;
 
     const request = await ConnectionRequest.findById(requestId);
@@ -89,7 +89,7 @@ export const acceptConnectionRequest = async (req, res) => {
 
 export const rejectConnectionRequest = async (req, res) => {
   try {
-    const requestId = req.params.id;
+    const requestId = req.params.requestId;
     const userId = req.user._id;
 
     const request = await ConnectionRequest.findById(requestId);
