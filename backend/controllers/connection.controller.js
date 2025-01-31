@@ -86,3 +86,34 @@ export const acceptConnectionRequest = async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 };
+
+export const rejectConnectionRequest = async (req, res) => {
+  try {
+    const requestId = req.params.id;
+    const userId = req.user._id;
+
+    const request = await ConnectionRequest.findById(requestId);
+    if (!request) {
+      return res.status(403).json({ message: "Connection request not found" });
+    }
+
+    if (request.recipient.toString() !== userId.toString()) {
+      return res
+        .status(400)
+        .json({ message: "Not authorized to reject this request" });
+    }
+
+    if (request.status !== "pending") {
+      return res
+        .status(400)
+        .json({ message: "This request has already been processed" });
+    }
+    request.status = "rejected";
+    await request.save();
+
+    res.json({ message: "Connection request rejected" });
+  } catch (error) {
+    console.log("Error in rejectConnectionRequest controller: ", error.message);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
