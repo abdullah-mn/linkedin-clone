@@ -5,6 +5,7 @@ import authRoutes from "./routes/auth.route.js";
 import userRoutes from "./routes/user.route.js";
 import postRoutes from "./routes/post.route.js";
 import notificationRoutes from "./routes/notification.route.js";
+import connectionRoutes from "./routes/connection.route.js";
 
 import { connectDB } from "./lib/db.js";
 
@@ -20,6 +21,7 @@ app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/user", userRoutes);
 app.use("/api/v1/post", postRoutes);
 app.use("/api/v1/notification", notificationRoutes);
+app.use("/api/v1/connections", connectionRoutes);
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
