@@ -36,7 +36,7 @@ const HomePage = () => {
         <PostCreation user={authUser} />
 
         {posts?.map((post) => (
-          <Post key={post.key} post={post} />
+          <Post key={post._id} post={post} />
         ))}
 
         {posts?.length === 0 && (
