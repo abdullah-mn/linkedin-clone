@@ -150,6 +150,7 @@ export const likePost = async (req, res) => {
       await newNotification.save();
     }
 
+    await post.save();
     res.status(200).json(post);
   } catch (error) {
     console.log("Error in likePost controller: ", error.message);
