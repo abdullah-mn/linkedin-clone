@@ -76,7 +76,7 @@ const Navbar = () => {
                   )}
                 </Link>
                 <Link
-                  to="/notifications"
+                  to="/notification"
                   className="text-neutral flex flex-col items-center relative"
                 >
                   <Bell size={20} />
