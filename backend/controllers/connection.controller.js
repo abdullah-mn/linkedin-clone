@@ -74,7 +74,7 @@ export const acceptConnectionRequest = async (req, res) => {
     });
 
     const notification = new Notification({
-      recipient: request.user._id,
+      recipient: request.sender._id,
       type: "connectionAccepted",
       relatedUser: userId,
     });
