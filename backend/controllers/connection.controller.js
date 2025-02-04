@@ -97,7 +97,7 @@ export const rejectConnectionRequest = async (req, res) => {
       return res.status(403).json({ message: "Connection request not found" });
     }
 
-    if (request.recipient.toString() !== userId.toString()) {
+    if (request.recipient._id.toString() !== userId.toString()) {
       return res
         .status(400)
         .json({ message: "Not authorized to reject this request" });
