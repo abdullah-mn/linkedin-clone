@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { axiosInstance } from "../lib/axios.js";
 import toast from "react-hot-toast";
 import {
@@ -15,6 +15,7 @@ import PostAction from "./PostAction.jsx";
 import { formatDistanceToNow } from "date-fns";
 
 const Post = ({ post }) => {
+  const { postId } = useParams();
   const { data: authUser } = useQuery({ queryKey: ["authUser"] });
 
   const [showComments, setShowComments] = useState(false);
@@ -57,6 +58,7 @@ const Post = ({ post }) => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["posts"] });
+      queryClient.invalidateQueries({ queryKey: ["post", postId] });
     },
   });
 
