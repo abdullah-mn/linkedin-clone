@@ -26,7 +26,8 @@ const NotificationPage = () => {
   const { mutate: markAsReadMutate } = useMutation({
     mutationFn: async (notificationId) =>
       await axiosInstance.put(`/notification/${notificationId}/read`),
-    onSuccess: () => queryClient.invalidateQueries(["notifications"]),
+    onSuccess: () =>
+      queryClient.invalidateQueries({ queryKey: ["notifications"] }),
   });
 
   const { mutate: deleteNotificationMutate } = useMutation({
@@ -34,7 +35,7 @@ const NotificationPage = () => {
       await axiosInstance.delete(`/notification/${notificationId}`),
     onSuccess: () => {
       toast.success("Notification deleted");
-      queryClient.invalidateQueries(["notifications"]);
+      queryClient.invalidateQueries({ queryKey: ["notifications"] });
     },
   });
 
