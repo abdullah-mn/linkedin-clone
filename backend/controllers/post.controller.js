@@ -82,7 +82,7 @@ export const getPostById = async (req, res) => {
 
     const post = await Post.findById(postId)
       .populate("author", "name username profilePicture headline")
-      .populate("comment.user", "name username profilePicture headline");
+      .populate("comments.user", "name username profilePicture headline");
 
     res.status(200).json(post);
   } catch (error) {
