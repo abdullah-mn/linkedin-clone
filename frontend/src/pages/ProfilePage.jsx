@@ -2,6 +2,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
 import { axiosInstance } from "../lib/axios";
 import ProfileSection from "../components/ProfileSection";
+import AboutSection from "../components/AboutSection";
 
 const ProfilePage = () => {
   const { username } = useParams();
@@ -31,6 +32,11 @@ const ProfilePage = () => {
   return (
     <div>
       <ProfileSection
+        userData={userData}
+        isOwnProfile={isOwnProfile}
+        onSave={handleSave}
+      />
+      <AboutSection
         userData={userData}
         isOwnProfile={isOwnProfile}
         onSave={handleSave}
