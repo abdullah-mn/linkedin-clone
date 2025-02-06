@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { axiosInstance } from "../lib/axios";
 import ProfileSection from "../components/ProfileSection";
 import AboutSection from "../components/AboutSection";
+import ExperienceSection from "../components/ExperienceSection";
 
 const ProfilePage = () => {
   const { username } = useParams();
@@ -37,6 +38,11 @@ const ProfilePage = () => {
         onSave={handleSave}
       />
       <AboutSection
+        userData={userData}
+        isOwnProfile={isOwnProfile}
+        onSave={handleSave}
+      />
+      <ExperienceSection
         userData={userData}
         isOwnProfile={isOwnProfile}
         onSave={handleSave}
