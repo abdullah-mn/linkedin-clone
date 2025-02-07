@@ -5,6 +5,7 @@ import ProfileSection from "../components/ProfileSection";
 import AboutSection from "../components/AboutSection";
 import ExperienceSection from "../components/ExperienceSection";
 import SkillsSection from "../components/SkillsSection";
+import EducationSection from "../components/EducationSection";
 
 const ProfilePage = () => {
   const { username } = useParams();
@@ -49,6 +50,11 @@ const ProfilePage = () => {
         onSave={handleSave}
       />
       <SkillsSection
+        userData={userData}
+        isOwnProfile={isOwnProfile}
+        onSave={handleSave}
+      />
+      <EducationSection
         userData={userData}
         isOwnProfile={isOwnProfile}
         onSave={handleSave}
