@@ -4,6 +4,7 @@ import { axiosInstance } from "../lib/axios";
 import ProfileSection from "../components/ProfileSection";
 import AboutSection from "../components/AboutSection";
 import ExperienceSection from "../components/ExperienceSection";
+import SkillsSection from "../components/SkillsSection";
 
 const ProfilePage = () => {
   const { username } = useParams();
@@ -43,6 +44,11 @@ const ProfilePage = () => {
         onSave={handleSave}
       />
       <ExperienceSection
+        userData={userData}
+        isOwnProfile={isOwnProfile}
+        onSave={handleSave}
+      />
+      <SkillsSection
         userData={userData}
         isOwnProfile={isOwnProfile}
         onSave={handleSave}
