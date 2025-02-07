@@ -9,7 +9,7 @@ import SkillsSection from "../components/SkillsSection";
 const ProfilePage = () => {
   const { username } = useParams();
   const queryClient = useQueryClient();
-  const { data: authUser } = useQuery({ queryKey: ["authUser"] });
+  const { data: authUser, isLoading } = useQuery({ queryKey: ["authUser"] });
 
   const { data: userProfile, isLoading: isUserProfileLoading } = useQuery({
     queryKey: ["userProfile", username],
